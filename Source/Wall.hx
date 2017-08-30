@@ -6,18 +6,14 @@ import nape.space.Space;
 import openfl.display.DisplayObject;
 import openfl.display.Sprite;
 import openfl.display.Stage;
-import Utils.*;
 
 class Wall extends Entity 
 {
-	private var _width: Float;
-	private var _height: Float;
+	private var _width: Float = 20;
+	private var _height: Float = 40;
 	
 	override function init() 
-	{
-		_width = dpiScale(20);
-		_height = dpiScale(60);
-		
+	{		
 		type = BodyType.KINEMATIC;
 		verts = Polygon.box(_width, _height);
 	}
