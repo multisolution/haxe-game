@@ -1,5 +1,11 @@
 package;
 
+import nape.callbacks.CbEvent;
+import nape.callbacks.CbType;
+import nape.callbacks.InteractionCallback;
+import nape.callbacks.InteractionListener;
+import nape.callbacks.InteractionType;
+import nape.callbacks.OptionType;
 import nape.phys.Body;
 import nape.phys.BodyType;
 import nape.shape.Polygon;
@@ -43,6 +49,17 @@ class Entity
 	{
 		body.position.x = x;
 		body.position.y = y;
+	}
+	
+	public function detectCollision(a: CbType, b: CbType, handler: InteractionCallback->Void): InteractionListener
+	{
+		var event: CbEvent = CbEvent.BEGIN;
+		var type: InteractionType = InteractionType.COLLISION;
+		var listener: InteractionListener = new InteractionListener(event, type, a, b, handler);
+		
+		space.listeners.add(listener);
+		
+		return listener;
 	}
 	
 	public function get_x(): Float

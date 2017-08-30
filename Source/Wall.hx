@@ -21,6 +21,13 @@ class Wall extends Entity
 		verts = Polygon.box(_width, _height);
 	}
 	
+	override function create() 
+	{
+		super.create();
+		
+		body.cbTypes.add(CbTypes.WALL);
+	}
+	
 	override function render():DisplayObject 
 	{
 		var sprite: Sprite = new Sprite();
