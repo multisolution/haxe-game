@@ -17,10 +17,10 @@ class Main extends Sprite
 		gravity = new Vec2(0, 1000);
 		space = new Space(gravity);
 		
-		stage.addEventListener(Event.ENTER_FRAME, handleEnterFrame, false, 0, true);
+		stage.addEventListener(Event.ENTER_FRAME, onEnterFrame, false, 0, true);
 	}
 	
-	private function handleEnterFrame(event: Event)
+	private function onEnterFrame(event: Event)
 	{
 		space.step(1 / stage.frameRate);
 	}
