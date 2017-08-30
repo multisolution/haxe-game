@@ -11,4 +11,20 @@
 	
 	<assets path="Assets" rename="assets" />
 	
+	<window
+		orientation="portrait"
+		background="#FFFFFF"
+		fps="60"
+		hardware="true"
+		allow-shaders="false"
+		require-shaders="false"
+		depth-buffer="false"
+		stencil-buffer="false"
+		fullscreen="false"
+		resizable="true"
+		borderless="true"
+		vsync="true"
+	/>
+	<window width="320" height="640" unless="mobile" />
+	
 </project>
