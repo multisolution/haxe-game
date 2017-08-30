@@ -12,6 +12,9 @@ import openfl.events.Event;
 
 class Entity 
 {
+	public var halfWidth(get, null): Float;
+	public var halfHeight(get, null): Float;
+	
 	private var type: BodyType;
 	private var verts: Dynamic;
 	private var body: Body;
@@ -30,6 +33,22 @@ class Entity
 		bind();
 		
 		stage.addEventListener(Event.ENTER_FRAME, onEnterFrame, false, 0, true);
+	}
+	
+	public function position(x: Float, y: Float)
+	{
+		body.position.x = x;
+		body.position.y = y;
+	}
+	
+	public function get_halfWidth(): Float
+	{
+		return display.width / 2;
+	}
+	
+	public function get_halfHeight(): Float
+	{
+		return display.height / 2;
 	}
 	
 	private function init()
