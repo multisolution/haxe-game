@@ -7,11 +7,10 @@ import openfl.display.Stage;
 class Level 
 {
 	public var y: Float;
-	
-	private var floor: Floor;
-	private var leftWall: Wall;
-	private var rightWall: Wall;
-	private var ladder: Ladder;
+	public var floor: Floor;
+	public var leftWall: Wall;
+	public var rightWall: Wall;
+	public var ladder: Ladder;
 	
 	public function new(stage: Stage, space: Space, ?prevLevel: Level) 
 	{		
@@ -26,11 +25,6 @@ class Level
 		leftWall.position(leftWall.halfWidth, floor.y - floor.halfHeight - leftWall.halfHeight);
 		rightWall.position(stage.stageWidth - rightWall.halfWidth, floor.y - floor.halfHeight - rightWall.halfHeight);
 		ladder.position(Std.random(stage.stageWidth), floor.y - floor.halfHeight - ladder.halfHeight - 20);
-	}
-	
-	public function positionPlayer(player: Player)
-	{
-		player.position(floor.x, floor.y - floor.halfHeight - player.halfHeight);
 	}
 	
 	public function slideDown()

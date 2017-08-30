@@ -31,7 +31,7 @@ class Main extends Sprite
 		addLevel();
 		addLevel();
 		
-		currentLevel.positionPlayer(player);
+		player.position(stage.stageWidth / 2, currentLevel.floor.top - player.halfHeight);
 		
 		stage.addEventListener(PlayerEvent.LADDER_COLLISION, onPlayerLadderCollision, false, 0, true);
 		stage.addEventListener(Event.ENTER_FRAME, onEnterFrame, false, 0, true);
@@ -57,9 +57,10 @@ class Main extends Sprite
 			}
 		}
 		
-		addLevel();		
+		addLevel();
+		player.x = currentLevel.ladder.x;
 		currentLevelIndex += 1;
-		currentLevel.positionPlayer(player);
+		player.y = currentLevel.floor.top - player.halfHeight;
 		player.move();
 	}
 	

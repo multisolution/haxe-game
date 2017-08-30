@@ -18,12 +18,13 @@ import openfl.events.Event;
 
 class Entity 
 {
-	public var x(get, null): Float;
-	public var y(get, null): Float;
+	public var x(get, set): Float;
+	public var y(get, set): Float;
 	public var width(get, null): Float;
 	public var height(get, null): Float;
 	public var halfWidth(get, null): Float;
 	public var halfHeight(get, null): Float;
+	public var top(get, null): Float;
 	
 	public var type: BodyType;
 	public var verts: Dynamic;
@@ -68,9 +69,19 @@ class Entity
 		return body.position.x;
 	}
 	
+	public function set_x(value: Float): Float
+	{
+		return body.position.x = value;
+	}
+	
 	public function get_y(): Float
 	{
 		return body.position.y;
+	}
+	
+	public function set_y(value: Float): Float
+	{
+		return body.position.y = value;
 	}
 	
 	public function get_width(): Float
@@ -91,6 +102,11 @@ class Entity
 	public function get_halfHeight(): Float
 	{
 		return display.height / 2;
+	}
+	
+	public function get_top(): Float
+	{
+		return y - halfHeight;
 	}
 	
 	private function init()
