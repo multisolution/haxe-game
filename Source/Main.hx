@@ -9,6 +9,7 @@ class Main extends Sprite
 {
 	private var gravity: Vec2;
 	private var space: Space;
+	private var player: Player;
 	
 	public function new()
 	{
@@ -16,6 +17,8 @@ class Main extends Sprite
 		
 		gravity = new Vec2(0, 1000);
 		space = new Space(gravity);
+		
+		player = new Player(stage, space);
 		
 		stage.addEventListener(Event.ENTER_FRAME, onEnterFrame, false, 0, true);
 	}
