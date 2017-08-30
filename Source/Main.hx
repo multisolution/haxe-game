@@ -6,6 +6,7 @@ import nape.geom.Vec2;
 import nape.space.Space;
 import openfl.display.Sprite;
 import openfl.events.Event;
+import Utils.*;
 
 class Main extends Sprite
 {
@@ -20,6 +21,8 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
+		
+		Utils.stage = stage;
 		
 		gravity = new Vec2(0, 1000);
 		space = new Space(gravity);
@@ -54,7 +57,7 @@ class Main extends Sprite
 	{
 		var prevLevel: Level = currentLevel;
 		var newPlayerX: Float = currentLevel.ladder.x;
-		var toSlide: Int = currentLevelIndex > 0 ? 80 : 0;
+		var toSlide: Float = currentLevelIndex > 0 ? dpiScale(80) : 0;
 		
 		player.body.space = null;
 		

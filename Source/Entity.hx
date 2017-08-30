@@ -178,6 +178,5 @@ class Entity
 		}
 		
 		body.space = null;
-	}
-	
+	}	
 }

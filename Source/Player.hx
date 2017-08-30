@@ -11,20 +11,20 @@ import nape.shape.Polygon;
 import openfl.display.DisplayObject;
 import openfl.display.Sprite;
 import openfl.events.MouseEvent;
+import Utils.*;
+import openfl.events.TouchEvent;
 
 class Player extends Entity
 {	
-	public var speed: Int = 200;
+	public var speed = dpiScale(200);
 	
-	private var _width: Int;
-	private var _height: Int;
+	private var _width: Float = dpiScale(20);
+	private var _height: Float = dpiScale(20);
+	private var jumpPower: Float = dpiScale(100);
 	private var isJumping: Bool = false;
 	
 	override function init() 
-	{
-		_width = 20;
-		_height = 20;
-		
+	{		
 		type = BodyType.DYNAMIC;
 		verts = Polygon.box(_width, _height);
 		
@@ -63,11 +63,14 @@ class Player extends Entity
 	
 	public function jump(): Bool
 	{
+		trace("JUUUMMMPPP!");
+		trace(jumpPower);
+		
 		if (isJumping) {
 			return false;
 		}
 		
-		body.applyImpulse(new Vec2(0, -100));
+		body.applyImpulse(new Vec2(0, -jumpPower));
 		return isJumping = true;
 	}
 	

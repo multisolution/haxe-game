@@ -6,6 +6,7 @@ import nape.space.Space;
 import openfl.display.DisplayObject;
 import openfl.display.Sprite;
 import openfl.display.Stage;
+import Utils.*;
 
 class Ladder extends Entity 
 {
@@ -14,8 +15,8 @@ class Ladder extends Entity
 	
 	override function init() 
 	{
-		_width = 20;
-		_height = 40;
+		_width = dpiScale(20);
+		_height = dpiScale(40);
 		
 		type = BodyType.KINEMATIC;
 		verts = Polygon.box(_width, _height);

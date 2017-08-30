@@ -26,6 +26,7 @@
 		borderless="true"
 		vsync="true"
 	/>
-	<window width="320" height="640" unless="mobile" />
+	
+	<window width="320" height="640" resizable="false" unless="mobile" />
 	
 </project>
