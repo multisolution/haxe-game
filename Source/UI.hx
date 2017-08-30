@@ -1,8 +1,10 @@
 package;
 
 import js.html.Text;
+import openfl.Assets;
 import openfl.display.Sprite;
 import openfl.text.TextField;
+import openfl.text.TextFormat;
 
 class UI extends Sprite 
 {
@@ -13,10 +15,18 @@ class UI extends Sprite
 	{
 		super();
 		
+		var format: TextFormat = new TextFormat(
+			Assets.getFont('fonts/AldotheApache.ttf').fontName,
+			40
+		);
+		
 		score = new TextField();
+		score.defaultTextFormat = format;
+		score.x = 20;
 		addChild(score);
 		
 		highScore = new TextField();
+		highScore.defaultTextFormat = format;
 		addChild(highScore);
 		
 	}
@@ -26,6 +36,6 @@ class UI extends Sprite
 		score.text = Data.score();
 		
 		highScore.text = Data.highScore();
-		highScore.x = stage.stageWidth - highScore.width;
+		highScore.x = stage.stageWidth - highScore.textWidth - 20;
 	}
 }

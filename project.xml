@@ -11,6 +11,7 @@
 	<haxelib name="nape" />
 	
 	<assets path="Assets" rename="assets" />
+	<assets path="Assets/fonts" rename="fonts" />
 	
 	<window
 		width="360" height="640"
