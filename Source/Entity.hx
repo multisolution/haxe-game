@@ -60,7 +60,7 @@ class Entity
 		body.position.y = y;
 	}
 	
-	public function detectCollision(a: CbType, b: CbType, handler: InteractionCallback->Void): InteractionListener
+	public function detectCollision(a: Dynamic, b: Dynamic, handler: InteractionCallback->Void): InteractionListener
 	{
 		var event: CbEvent = CbEvent.BEGIN;
 		var type: InteractionType = InteractionType.COLLISION;

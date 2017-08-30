@@ -2,9 +2,11 @@ package;
 
 import events.PlayerEvent;
 import nape.callbacks.CbEvent;
+import nape.callbacks.CbType;
 import nape.callbacks.InteractionCallback;
 import nape.callbacks.InteractionListener;
 import nape.callbacks.InteractionType;
+import nape.callbacks.OptionType;
 import nape.geom.Vec2;
 import nape.phys.BodyType;
 import nape.shape.Polygon;
@@ -16,11 +18,11 @@ import openfl.events.TouchEvent;
 class Player extends Entity
 {	
 	public var speed: Float = 200;
+	public var isJumping: Bool = false;
 	
 	private var _width: Float = 20;
 	private var _height: Float = 20;
-	private var jumpPower: Float = 100;
-	private var isJumping: Bool = false;
+	private var jumpPower: Float = 100;	
 	
 	override function init() 
 	{		
@@ -31,6 +33,7 @@ class Player extends Entity
 		detectCollision(CbTypes.PLAYER, CbTypes.FLOOR, onFloorCollision);
 		detectCollision(CbTypes.PLAYER, CbTypes.LADDER, onLadderCollision);
 		detectCollision(CbTypes.PLAYER, CbTypes.ENEMY, onEnemyCollision);
+		detectCollision(CbTypes.ENEMY, new OptionType(CbType.ANY_BODY, CbTypes.FLOOR), onEnemyWallCollision);
 		
 		stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown, false, 0, true);
 	}
@@ -91,6 +94,13 @@ class Player extends Entity
 	private function onEnemyCollision(collision: InteractionCallback)
 	{
 		stage.dispatchEvent(new PlayerEvent(PlayerEvent.ENEMY_COLLISION));
+	}
+	
+	private function onEnemyWallCollision(collision: InteractionCallback)
+	{
+		var enemy: Enemy = cast(collision.int1.userData.entity, Enemy);
+		enemy.speed *= -1;
+		enemy.move();
 	}
 	
 	private function onMouseDown(event: MouseEvent)

@@ -41,12 +41,15 @@ class Level
 		var ladderX: Float = getRandomXFor(ladder);
 		ladder.position(ladderX, floor.y - floor.halfHeight - ladder.halfHeight - 20);
 		
+		
 		var enemyX: Float = getRandomXFor(enemy);
 		
 		if (prevLevel != null) {
 			while (enemyX >= prevLevel.ladder.x - 40 && enemyX <= prevLevel.ladder.x + 40) {
 				enemyX = getRandomXFor(enemy);
 			}
+		} else {
+			enemy.free();
 		}
 		
 		enemy.position(enemyX, floor.top - enemy.halfHeight);

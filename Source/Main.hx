@@ -88,6 +88,7 @@ class Main extends Sprite
 		var toSlide: Float = currentLevelIndex > 2 ? 80 : 0;
 		
 		player.body.space = null;
+		player.body.velocity.setxy(0, 0);		
 		
 		for (level in levels) {
 			level.slideDown(toSlide);
@@ -95,6 +96,8 @@ class Main extends Sprite
 		
 		addLevel();						
 		currentLevelIndex += 1;
+		
+		player.isJumping = false;
 		
 		Actuate.tween(player, 1, {x: newPlayerX, y: currentLevel.floor.top + toSlide - player.halfHeight}).onComplete(function () {
 			player.body.space = space;

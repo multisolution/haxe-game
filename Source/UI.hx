@@ -1,6 +1,5 @@
 package;
 
-import js.html.Text;
 import openfl.Assets;
 import openfl.display.Sprite;
 import openfl.text.TextField;
