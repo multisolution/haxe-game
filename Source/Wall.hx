@@ -7,15 +7,15 @@ import openfl.display.DisplayObject;
 import openfl.display.Sprite;
 import openfl.display.Stage;
 
-class Floor extends Entity 
+class Wall extends Entity 
 {
 	private var _width: Int;
 	private var _height: Int;
 	
 	override function init() 
 	{
-		_width = stage.stageWidth;
-		_height = 20;
+		_width = 20;
+		_height = 60;
 		
 		type = BodyType.KINEMATIC;
 		verts = Polygon.box(_width, _height);
@@ -25,7 +25,7 @@ class Floor extends Entity
 	{
 		var sprite: Sprite = new Sprite();
 		sprite.graphics.beginFill(0);
-		sprite.graphics.drawRect(-_width / 2, -_height / 2, _width, _height);
+		sprite.graphics.drawRect( -_width / 2, -_height / 2, _width, _height);
 		sprite.graphics.endFill();
 		return sprite;
 	}

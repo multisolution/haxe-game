@@ -10,7 +10,7 @@ class Main extends Sprite
 	private var gravity: Vec2;
 	private var space: Space;
 	private var player: Player;
-	private var floor: Floor;
+	private var level: Level;
 	
 	public function new()
 	{
@@ -22,8 +22,7 @@ class Main extends Sprite
 		player = new Player(stage, space);
 		player.position(stage.stageWidth / 2, stage.stageHeight / 2);
 		
-		floor = new Floor(stage, space);
-		floor.position(stage.stageWidth / 2, stage.stageHeight - floor.halfHeight);
+		level = new Level(stage, space);
 		
 		stage.addEventListener(Event.ENTER_FRAME, onEnterFrame, false, 0, true);
 	}

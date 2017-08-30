@@ -12,6 +12,10 @@ import openfl.events.Event;
 
 class Entity 
 {
+	public var x(get, null): Float;
+	public var y(get, null): Float;
+	public var width(get, null): Float;
+	public var height(get, null): Float;
 	public var halfWidth(get, null): Float;
 	public var halfHeight(get, null): Float;
 	
@@ -39,6 +43,26 @@ class Entity
 	{
 		body.position.x = x;
 		body.position.y = y;
+	}
+	
+	public function get_x(): Float
+	{
+		return body.position.x;
+	}
+	
+	public function get_y(): Float
+	{
+		return body.position.y;
+	}
+	
+	public function get_width(): Float
+	{
+		return display.width;
+	}
+	
+	public function get_height(): Float
+	{
+		return display.height;
 	}
 	
 	public function get_halfWidth(): Float

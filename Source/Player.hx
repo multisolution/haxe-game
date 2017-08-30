@@ -7,23 +7,23 @@ import openfl.display.Sprite;
 
 class Player extends Entity
 {
-	private var width: Int;
-	private var height: Int;
+	private var _width: Int;
+	private var _height: Int;
 	
 	override function init() 
 	{
-		width = 20;
-		height = 20;
+		_width = 20;
+		_height = 20;
 		
 		type = BodyType.DYNAMIC;
-		verts = Polygon.box(width, height);
+		verts = Polygon.box(_width, _height);
 	}
 	
 	override function render(): DisplayObject 
 	{
 		var sprite: Sprite = new Sprite();
 		sprite.graphics.beginFill(0);
-		sprite.graphics.drawRect(-width / 2, -height / 2, width, height);
+		sprite.graphics.drawRect(-_width / 2, -_height / 2, _width, _height);
 		sprite.graphics.endFill();
 		return sprite;
 	}
