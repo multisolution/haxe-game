@@ -25,6 +25,7 @@ class Entity
 	public var halfWidth(get, null): Float;
 	public var halfHeight(get, null): Float;
 	public var top(get, null): Float;
+	public var right(get, null): Float;
 	
 	public var type: BodyType;
 	public var verts: Dynamic;
@@ -107,6 +108,11 @@ class Entity
 	public function get_top(): Float
 	{
 		return y - halfHeight;
+	}
+	
+	public function get_right(): Float
+	{
+		return x + halfWidth;
 	}
 	
 	private function init()
