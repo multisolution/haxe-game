@@ -17,6 +17,7 @@ class Main extends Sprite
 	private var player: Player;
 	private var levels: Array<Level>;
 	private var currentLevelIndex: Int;
+	private var ui: UI;
 	
 	public function new()
 	{
@@ -28,7 +29,19 @@ class Main extends Sprite
 		space = new Space(gravity);
 		
 		player = new Player(stage, space);
+		ui = new UI();
 		
+		stage.addChild(ui);
+		
+		start();
+		
+		stage.addEventListener(PlayerEvent.LADDER_COLLISION, onPlayerLadderCollision, false, 0, true);
+		stage.addEventListener(PlayerEvent.ENEMY_COLLISION, onPlayerEnemyCollision, false, 0, true);
+		stage.addEventListener(Event.ENTER_FRAME, onEnterFrame, false, 0, true);
+	}
+	
+	private function start()
+	{
 		currentLevelIndex = 0;
 		levels = [];
 		
@@ -36,9 +49,20 @@ class Main extends Sprite
 		addLevel();
 		
 		player.position(stage.stageWidth / 2, currentLevel.floor.top - player.halfHeight);
-		
-		stage.addEventListener(PlayerEvent.LADDER_COLLISION, onPlayerLadderCollision, false, 0, true);
-		stage.addEventListener(Event.ENTER_FRAME, onEnterFrame, false, 0, true);
+		player.move();
+	}
+	
+	private function reset()
+	{
+		for (level in levels) {
+			level.free();
+		}
+	}
+	
+	private function onPlayerEnemyCollision(event: PlayerEvent)
+	{
+		reset();
+		start();
 	}
 	
 	private function addLevel(): Level
@@ -57,7 +81,7 @@ class Main extends Sprite
 	{
 		var prevLevel: Level = currentLevel;
 		var newPlayerX: Float = currentLevel.ladder.x;
-		var toSlide: Float = currentLevelIndex > 0 ? 80 : 0;
+		var toSlide: Float = currentLevelIndex > 2 ? 80 : 0;
 		
 		player.body.space = null;
 		
@@ -78,8 +102,8 @@ class Main extends Sprite
 	
 	private function freeOldLevel()
 	{
-		if (currentLevelIndex > 2) {
-			levels[currentLevelIndex - 2].free();
+		if (currentLevelIndex > 10) {
+			levels[currentLevelIndex - 10].free();
 		}
 	}
 	

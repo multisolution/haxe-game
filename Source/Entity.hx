@@ -171,7 +171,10 @@ class Entity
 	public function free()
 	{
 		stage.removeEventListener(Event.ENTER_FRAME, onEnterFrame, false);
-		stage.removeChild(display);
+		
+		if (display.parent == stage) {
+			stage.removeChild(display);
+		}
 		
 		for (listener in listeners) {
 			space.listeners.remove(listener);

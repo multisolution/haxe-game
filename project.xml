@@ -19,7 +19,7 @@
 		fps="60"
 		hardware="true"
 		fullscreen="true"
-		resizable="false"
+		resizable="true"
 		borderless="true"
 		vsync="true"
 	/>

@@ -30,6 +30,7 @@ class Player extends Entity
 		detectCollision(CbTypes.PLAYER, CbTypes.WALL, onWallCollision);
 		detectCollision(CbTypes.PLAYER, CbTypes.FLOOR, onFloorCollision);
 		detectCollision(CbTypes.PLAYER, CbTypes.LADDER, onLadderCollision);
+		detectCollision(CbTypes.PLAYER, CbTypes.ENEMY, onEnemyCollision);
 		
 		stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown, false, 0, true);
 	}
@@ -85,6 +86,11 @@ class Player extends Entity
 	private function onLadderCollision(collision: InteractionCallback)
 	{
 		stage.dispatchEvent(new PlayerEvent(PlayerEvent.LADDER_COLLISION));
+	}
+	
+	private function onEnemyCollision(collision: InteractionCallback)
+	{
+		stage.dispatchEvent(new PlayerEvent(PlayerEvent.ENEMY_COLLISION));
 	}
 	
 	private function onMouseDown(event: MouseEvent)
