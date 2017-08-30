@@ -1,6 +1,7 @@
 package;
 
 import events.PlayerEvent;
+import motion.Actuate;
 import nape.geom.Vec2;
 import nape.space.Space;
 import openfl.display.Sprite;
@@ -51,17 +52,22 @@ class Main extends Sprite
 	
 	private function onPlayerLadderCollision(event: PlayerEvent)
 	{
-		if (currentLevelIndex > 0) {
-			for (level in levels) {
-				level.slideDown();
-			}
+		var newPlayerX: Float = currentLevel.ladder.x;
+		var toSlide: Int = currentLevelIndex > 0 ? 80 : 0;
+		
+		player.body.space = null;
+		
+		for (level in levels) {
+			level.slideDown(toSlide);
 		}
 		
-		addLevel();
-		player.x = currentLevel.ladder.x;
+		addLevel();						
 		currentLevelIndex += 1;
-		player.y = currentLevel.floor.top - player.halfHeight;
-		player.move();
+		
+		Actuate.tween(player, 1, {x: newPlayerX, y: currentLevel.floor.top + toSlide - player.halfHeight}).onComplete(function () {
+			player.body.space = space;
+			player.move();
+		});
 	}
 	
 	private function onEnterFrame(event: Event)

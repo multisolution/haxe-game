@@ -1,5 +1,6 @@
 package;
 
+import motion.Actuate;
 import nape.geom.Vec2;
 import nape.space.Space;
 import openfl.display.Stage;
@@ -27,15 +28,13 @@ class Level
 		ladder.position(Std.random(stage.stageWidth), floor.y - floor.halfHeight - ladder.halfHeight - 20);
 	}
 	
-	public function slideDown()
+	public function slideDown(toSlide: Int)
 	{
-		var toSlide: Int = 80;
-		
-		y += toSlide;
-		floor.body.position.y += toSlide;
-		leftWall.body.position.y += toSlide;
-		rightWall.body.position.y += toSlide;
-		ladder.body.position.y += toSlide;
+		y += toSlide;	
+		Actuate.tween(floor, 1, {y: floor.y + toSlide});
+		Actuate.tween(leftWall, 1, {y: leftWall.y + toSlide});
+		Actuate.tween(rightWall, 1, {y: rightWall.y + toSlide});
+		Actuate.tween(ladder, 1, {y: ladder.y + toSlide}).delay(0.1);
 	}
 	
 }
