@@ -5,7 +5,6 @@ import nape.geom.Vec2;
 import nape.space.Space;
 import openfl.display.Stage;
 import openfl.geom.Rectangle;
-import Utils.*;
 
 class Level 
 {
@@ -22,7 +21,7 @@ class Level
 		rightWall = new Wall(stage, space);
 		ladder = new Ladder(stage, space);
 		
-		y = prevLevel == null ? stage.stageHeight - floor.halfHeight : prevLevel.y - dpiScale(80);
+		y = prevLevel == null ? stage.stageHeight - floor.halfHeight : prevLevel.y - 80;
 		
 		floor.position(stage.stageWidth / 2, y);
 		leftWall.position(leftWall.halfWidth, floor.y - floor.halfHeight - leftWall.halfHeight);
@@ -37,7 +36,7 @@ class Level
 		);
 		
 		var randomLadderY: Float = Std.random(Std.int(whiteSpace.width - ladder.width)) + (whiteSpace.left + ladder.halfWidth);		
-		ladder.position(randomLadderY, floor.y - floor.halfHeight - ladder.halfHeight - dpiScale(20));
+		ladder.position(randomLadderY, floor.y - floor.halfHeight - ladder.halfHeight - 20);
 	}
 	
 	public function slideDown(toSlide: Float)

@@ -6,18 +6,15 @@ import nape.space.Space;
 import openfl.display.DisplayObject;
 import openfl.display.Sprite;
 import openfl.display.Stage;
-import Utils.*;
 
 class Floor extends Entity 
 {
-	private var _width: Float;
-	private var _height: Float;
+	private var _width: Float = 0;
+	private var _height: Float = 20;
 	
 	override function init() 
 	{
-		_width = stage.stageWidth;
-		_height = dpiScale(20);
-		
+		_width = stage.stageWidth;		
 		type = BodyType.KINEMATIC;
 		verts = Polygon.box(_width, _height);
 	}
