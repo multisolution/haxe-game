@@ -40,6 +40,8 @@ class Player extends Entity
 		super.create();		
 		
 		body.cbTypes.add(CbTypes.PLAYER);		
+		body.allowRotation = false;
+		
 		shape.material.dynamicFriction = 0;
 		
 		move();

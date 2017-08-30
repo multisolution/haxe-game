@@ -52,6 +52,7 @@ class Main extends Sprite
 	
 	private function onPlayerLadderCollision(event: PlayerEvent)
 	{
+		var prevLevel: Level = currentLevel;
 		var newPlayerX: Float = currentLevel.ladder.x;
 		var toSlide: Int = currentLevelIndex > 0 ? 80 : 0;
 		
@@ -68,6 +69,15 @@ class Main extends Sprite
 			player.body.space = space;
 			player.move();
 		});
+		
+		freeOldLevel();
+	}
+	
+	private function freeOldLevel()
+	{
+		if (currentLevelIndex > 2) {
+			levels[currentLevelIndex - 2].free();
+		}
 	}
 	
 	private function onEnterFrame(event: Event)

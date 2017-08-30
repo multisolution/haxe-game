@@ -35,10 +35,14 @@ class Entity
 	public var stage: Stage;
 	public var space: Space;
 	
+	private var listeners: Array<InteractionListener>;
+	
 	public function new(stage: Stage, space: Space)
 	{
 		this.stage = stage;
 		this.space = space;
+		
+		listeners = [];
 		
 		init();
 		create();
@@ -61,6 +65,7 @@ class Entity
 		var listener: InteractionListener = new InteractionListener(event, type, a, b, handler);
 		
 		space.listeners.add(listener);
+		listeners.push(listener);
 		
 		return listener;
 	}
@@ -149,6 +154,18 @@ class Entity
 	private function onEnterFrame(event: Event)
 	{
 		update();
+	}
+	
+	public function free()
+	{
+		stage.removeEventListener(Event.ENTER_FRAME, onEnterFrame, false);
+		stage.removeChild(display);
+		
+		for (listener in listeners) {
+			space.listeners.remove(listener);
+		}
+		
+		body.space = null;
 	}
 	
 }

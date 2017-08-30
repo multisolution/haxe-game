@@ -51,4 +51,12 @@ class Level
 		Actuate.tween(ladder, 1, {y: ladder.y + toSlide}).delay(0.1);
 	}
 	
+	public function free()
+	{
+		floor.free();
+		leftWall.free();
+		rightWall.free();
+		ladder.free();
+	}
+	
 }
