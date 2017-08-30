@@ -57,10 +57,14 @@ class Main extends Sprite
 		for (level in levels) {
 			level.free();
 		}
+		
+		Data.resetScore();
 	}
 	
 	private function onPlayerEnemyCollision(event: PlayerEvent)
 	{
+		Data.setHighScore(Std.int(Math.max(Data.highScore(), Data.score())));
+		
 		reset();
 		start();
 	}
@@ -98,6 +102,8 @@ class Main extends Sprite
 		});
 		
 		freeOldLevel();
+		
+		Data.incScore();
 	}
 	
 	private function freeOldLevel()
@@ -110,5 +116,6 @@ class Main extends Sprite
 	private function onEnterFrame(event: Event)
 	{
 		space.step(1 / stage.frameRate);
+		ui.update();
 	}
 }
