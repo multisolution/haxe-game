@@ -25,13 +25,13 @@ class Entity
 	public var halfWidth(get, null): Float;
 	public var halfHeight(get, null): Float;
 	
-	private var type: BodyType;
-	private var verts: Dynamic;
-	private var body: Body;
-	private var shape: Shape;
-	private var display: DisplayObject;
-	private var stage: Stage;
-	private var space: Space;
+	public var type: BodyType;
+	public var verts: Dynamic;
+	public var body: Body;
+	public var shape: Shape;
+	public var display: DisplayObject;
+	public var stage: Stage;
+	public var space: Space;
 	
 	public function new(stage: Stage, space: Space)
 	{
@@ -40,6 +40,7 @@ class Entity
 		
 		init();
 		create();
+		update();
 		bind();
 		
 		stage.addEventListener(Event.ENTER_FRAME, onEnterFrame, false, 0, true);

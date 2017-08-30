@@ -1,5 +1,6 @@
 package;
 
+import events.PlayerEvent;
 import nape.callbacks.CbEvent;
 import nape.callbacks.InteractionCallback;
 import nape.callbacks.InteractionListener;
@@ -29,18 +30,19 @@ class Player extends Entity
 		
 		detectCollision(CbTypes.PLAYER, CbTypes.WALL, onWallCollision);
 		detectCollision(CbTypes.PLAYER, CbTypes.FLOOR, onFloorCollision);
+		detectCollision(CbTypes.PLAYER, CbTypes.LADDER, onLadderCollision);
 		
 		stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown, false, 0, true);
 	}
 	
 	override function create() 
 	{
-		super.create();
+		super.create();		
 		
-		body.velocity.x = speed;
-		body.cbTypes.add(CbTypes.PLAYER);
-		
+		body.cbTypes.add(CbTypes.PLAYER);		
 		shape.material.dynamicFriction = 0;
+		
+		move();
 	}
 	
 	override function render(): DisplayObject 
@@ -50,6 +52,11 @@ class Player extends Entity
 		sprite.graphics.drawRect(-_width / 2, -_height / 2, _width, _height);
 		sprite.graphics.endFill();
 		return sprite;
+	}
+	
+	public function move()
+	{
+		body.velocity.x = speed;
 	}
 	
 	public function jump(): Bool
@@ -66,12 +73,17 @@ class Player extends Entity
 	private function onWallCollision(collision: InteractionCallback)
 	{
 		speed *= -1;
-		body.velocity.x = speed;
+		move();
 	}
 	
 	private function onFloorCollision(collision: InteractionCallback)
 	{
 		isJumping = false;
+	}
+	
+	private function onLadderCollision(collision: InteractionCallback)
+	{
+		stage.dispatchEvent(new PlayerEvent(PlayerEvent.LADDER_COLLISION));
 	}
 	
 	private function onMouseDown(event: MouseEvent)
