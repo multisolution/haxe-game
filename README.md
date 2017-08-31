@@ -5,6 +5,7 @@ Playing with [Haxe](https://haxe.org/), [OpenFl](http://www.openfl.org/) and [Na
 https://multisolution.github.io/haxe-game/demo/
 
 ## NTS
+- Missing something to globally handle collisions, maybe a `InteractionManager` what would avoid custom events like `PlayerEvent` and handling `Enemy` collisions to the `Wall` inside the `Player`
 - It's boring, yet very illustrative to handle a link between Nape and OpenFl
 - Definitely, for a production work, it worth to use a renderer like HaxeFlixel or HaxePunk
 - <strike>It's very hard to manage DPI scale</strike>
