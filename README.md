@@ -14,7 +14,7 @@ https://multisolution.github.io/haxe-game/demo/
 
 Actually, it doesn't makes sense to build a fluid layout game since players will, at least in this case, see distinct level widths which direct impacts gameplay. So we're defining `360x640` as the logical resolution, which has a 9:16 aspect ratio (or a portrait 16:9) and let it fit into the available space. Good read: https://v-play.net/doc/vplay-different-screen-sizes/
 
-## 🎨 Looking for some graphics assets
+## 🎨 Looking for some graphic assets
 
 The main ideia is a **8-bit**, e.g.:
 * https://dribbble.com/shots/3156576-Rocketbank-Characters-Jump-cycle
