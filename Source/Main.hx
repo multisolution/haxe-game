@@ -2,6 +2,7 @@ package;
 
 import events.PlayerEvent;
 import motion.Actuate;
+import motion.easing.Linear;
 import nape.geom.Vec2;
 import nape.space.Space;
 import openfl.display.Sprite;
@@ -71,7 +72,7 @@ class Main extends Sprite
 	
 	private function addLevel(): Level
 	{		
-		var level: Level = new Level(stage, space, levels[levels.length - 1]);
+		var level: Level = new Level(stage, space, levels[levels.length - 1], player);
 		levels.push(level);
 		return level;
 	}
@@ -87,7 +88,7 @@ class Main extends Sprite
 		var newPlayerX: Float = currentLevel.ladder.x;
 		var toSlide: Float = currentLevelIndex > 2 ? 80 : 0;
 		
-		player.body.space = null;
+		player.shape.sensorEnabled = true;
 		player.body.velocity.setxy(0, 0);		
 		
 		for (level in levels) {
@@ -99,9 +100,12 @@ class Main extends Sprite
 		
 		player.isJumping = false;
 		
-		Actuate.tween(player, 1, {x: newPlayerX, y: currentLevel.floor.top + toSlide - player.halfHeight}).onComplete(function () {
-			player.body.space = space;
+		Actuate.tween(player, 0.3, {x: newPlayerX, y: currentLevel.floor.top + toSlide - player.halfHeight})
+		.ease(Linear.easeNone)
+		.onComplete(function () {
+			player.shape.sensorEnabled = false;
 			player.move();
+			currentLevel.enemy.move();
 		});
 		
 		freeOldLevel();

@@ -2,6 +2,8 @@ package;
 
 import motion.Actuate;
 import motion.easing.Bounce;
+import motion.easing.Expo;
+import motion.easing.Quint;
 import nape.geom.Vec2;
 import nape.space.Space;
 import openfl.display.Stage;
@@ -16,14 +18,18 @@ class Level
 	public var ladder: Ladder;
 	public var enemy: Enemy;
 	public var whiteSpace: Rectangle;
+	public var player: Player;
+	public var boost: Boost;
 	
-	public function new(stage: Stage, space: Space, ?prevLevel: Level) 
+	public function new(stage: Stage, space: Space, ?prevLevel: Level, player: Player) 
 	{		
 		floor = new Floor(stage, space);
 		leftWall = new Wall(stage, space);
 		rightWall = new Wall(stage, space);
 		ladder = new Ladder(stage, space);
 		enemy = new Enemy(stage, space);
+		
+		this.player = player;
 		
 		y = prevLevel == null ? stage.stageHeight - floor.halfHeight : prevLevel.y - 80;
 		
@@ -53,6 +59,16 @@ class Level
 		}
 		
 		enemy.position(enemyX, floor.top - enemy.halfHeight);
+		
+		boost = new Boost(stage, space);
+		boost.position(
+			Math.random() > 0.5 ? leftWall.right + 20 : rightWall.left - 20,
+			floor.top - boost.halfHeight
+		);
+		
+		if (Math.random() >= 0.1) {
+			boost.free();
+		}
 	}
 	
 	private function getRandomXFor(entity: Entity): Float
@@ -63,12 +79,16 @@ class Level
 	
 	public function slideDown(toSlide: Float)
 	{
-		y += toSlide;	
-		Actuate.tween(floor, 1, {y: floor.y + toSlide});
-		Actuate.tween(leftWall, 1, {y: leftWall.y + toSlide});
-		Actuate.tween(rightWall, 1, {y: rightWall.y + toSlide});
-		Actuate.tween(ladder, 1, {y: ladder.y + toSlide}).delay(0.1);
-		Actuate.tween(enemy, 1, {y: enemy.y + toSlide}).delay(0.1).ease(Bounce.easeOut);
+		var duration: Float = 0.3;
+		
+		y += toSlide;
+		
+		Actuate.tween(floor, duration, {y: floor.y + toSlide}).ease(Expo.easeOut);
+		Actuate.tween(leftWall, duration, {y: leftWall.y + toSlide}).ease(Expo.easeOut);
+		Actuate.tween(rightWall, duration, {y: rightWall.y + toSlide}).ease(Expo.easeOut);
+		Actuate.tween(boost, duration, {y: boost.y + toSlide}).ease(Expo.easeInOut);
+		Actuate.tween(ladder, duration, {y: ladder.y + toSlide}).delay(0.1);
+		Actuate.tween(enemy, duration, {y: enemy.y + toSlide}).delay(0.1).ease(Bounce.easeOut);
 	}
 	
 	public function free()
@@ -78,6 +98,7 @@ class Level
 		rightWall.free();
 		ladder.free();
 		enemy.free();
+		boost.free();
 	}
 	
 }
