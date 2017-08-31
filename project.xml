@@ -13,6 +13,8 @@
 	<assets path="Assets" rename="assets" />
 	<assets path="Assets/fonts" rename="fonts" />
 	
+	<library path="Assets/library.swf" preload="true" />
+	
 	<window
 		width="360" height="640"
 		orientation="portrait"

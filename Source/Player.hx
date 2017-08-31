@@ -12,7 +12,9 @@ import nape.callbacks.OptionType;
 import nape.geom.Vec2;
 import nape.phys.BodyType;
 import nape.shape.Polygon;
+import openfl.Assets;
 import openfl.display.DisplayObject;
+import openfl.display.MovieClip;
 import openfl.display.Sprite;
 import openfl.events.MouseEvent;
 import openfl.events.TouchEvent;
@@ -23,9 +25,9 @@ class Player extends Entity
 	public var isJumping: Bool = false;
 	public var isBoosted: Bool = false;
 	
-	private var _width: Float = 20;
-	private var _height: Float = 20;
-	private var jumpPower: Float = 100;
+	private var _width: Float = 30;
+	private var _height: Float = 30;
+	private var jumpPower: Float = 200;
 	
 	override function init() 
 	{		
@@ -56,6 +58,11 @@ class Player extends Entity
 	
 	override function render(): DisplayObject 
 	{
+		var graphic: MovieClip = Assets.getMovieClip("library:Minazinha");
+		graphic.width = 30;
+		graphic.height = 30;
+		return graphic;
+		
 		var sprite: Sprite = new Sprite();
 		sprite.graphics.beginFill(0x0000FF);
 		sprite.graphics.drawRect(-_width / 2, -_height / 2, _width, _height);
@@ -93,6 +100,7 @@ class Player extends Entity
 	private function onWallCollision(collision: InteractionCallback)
 	{
 		speed *= -1;
+		display.scaleX *= -1;
 		move();
 	}
 	
