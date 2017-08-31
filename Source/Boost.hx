@@ -1,6 +1,5 @@
 package;
 
-import js.html.SpeechRecognitionError;
 import nape.phys.BodyType;
 import nape.shape.Polygon;
 import nape.space.Space;
