@@ -8,14 +8,14 @@ import openfl.display.Sprite;
 import openfl.display.Stage;
 
 class Ladder extends Entity 
-{
-	private var _width: Float = 20;
-	private var _height: Float = 40;
-	
+{	
 	override function init() 
-	{		
+	{
+		width = 20;
+		height = 40;
+		
 		type = BodyType.KINEMATIC;
-		verts = Polygon.box(_width, _height);
+		verts = Polygon.box(width, height);
 	}
 	
 	override function create() 
@@ -29,7 +29,7 @@ class Ladder extends Entity
 	{
 		var sprite: Sprite = new Sprite();
 		sprite.graphics.beginFill(0x777777);
-		sprite.graphics.drawRect( -_width / 2, -_height / 2, _width, _height);
+		sprite.graphics.drawRect(-halfWidth, -halfHeight, width, height);
 		sprite.graphics.endFill();
 		return sprite;
 	}

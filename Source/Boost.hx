@@ -8,12 +8,11 @@ import openfl.display.Sprite;
 import openfl.display.Stage;
 
 class Boost extends Entity 
-{
-	private var _width: Float = 15;
-	private var _height: Float = 15;
-	
+{	
 	override function init() 
 	{
+		width = height = 15;
+		
 		type = BodyType.KINEMATIC;
 		verts = Polygon.box(15, 15);
 	}
@@ -30,7 +29,7 @@ class Boost extends Entity
 	{
 		var sprite: Sprite = new Sprite();
 		sprite.graphics.beginFill(0x00FF00);
-		sprite.graphics.drawRect( -_width / 2, -_height / 2, _width, _height);
+		sprite.graphics.drawRect(-halfWidth, -halfHeight, width, height);
 		sprite.graphics.endFill();
 		return sprite;
 	}

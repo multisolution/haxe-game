@@ -34,8 +34,8 @@ class Level
 		y = prevLevel == null ? stage.stageHeight - floor.halfHeight : prevLevel.y - 100;
 		
 		floor.position(stage.stageWidth / 2, y);
-		leftWall.position(leftWall.halfWidth, floor.y - floor.halfHeight - leftWall.halfHeight);
-		rightWall.position(stage.stageWidth - rightWall.halfWidth, floor.y - floor.halfHeight - rightWall.halfHeight);
+		leftWall.position(leftWall.halfWidth, floor.top - leftWall.halfHeight);
+		rightWall.position(stage.stageWidth - rightWall.halfWidth, floor.top - rightWall.halfHeight);
 		
 		whiteSpace = new Rectangle(
 			leftWall.right,

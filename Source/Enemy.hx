@@ -16,11 +16,8 @@ class Enemy extends Entity
 {	
 	public var speed: Float = 50;
 	
-	private var _width: Float = 20;
-	private var _height: Float = 30;
-	
 	public function move()
-	{
+	{		
 		body.velocity.x = speed;
 		cast(display, MovieClip).play();
 	}
@@ -34,9 +31,12 @@ class Enemy extends Entity
 	
 	override function init() 
 	{
+		width = 13;
+		height = 27;
+		
 		speed = 50 + Data.score();
 		type = BodyType.DYNAMIC;
-		verts = Polygon.box(_width, _height);
+		verts = Polygon.box(width, height);
 	}
 	
 	override function create()
@@ -52,16 +52,6 @@ class Enemy extends Entity
 	
 	override function render():DisplayObject 
 	{
-		var movieClip: MovieClip = Assets.getMovieClip("library:Zombie");
-		movieClip.width = 30;
-		movieClip.height = 30;
-		movieClip.stop();
-		return movieClip;
-		
-		var sprite: Sprite = new Sprite();
-		sprite.graphics.beginFill(0xFF0000);
-		sprite.graphics.drawCircle(0, 0, _width / 2);
-		sprite.graphics.endFill();
-		return sprite;
+		return Assets.getMovieClip("library:Zombie");
 	}
 }

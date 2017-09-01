@@ -20,14 +20,15 @@ class Entity
 {
 	public var x(get, set): Float;
 	public var y(get, set): Float;
-	public var width(get, null): Float;
-	public var height(get, null): Float;
 	public var halfWidth(get, null): Float;
 	public var halfHeight(get, null): Float;
 	public var top(get, null): Float;
 	public var left(get, null): Float;
 	public var bottom(get, null): Float;
 	public var right(get, null): Float;
+	
+	public var width: Float;
+	public var height: Float;
 	
 	public var type: BodyType;
 	public var verts: Dynamic;
@@ -90,26 +91,16 @@ class Entity
 	public function set_y(value: Float): Float
 	{
 		return body.position.y = value;
-	}
-	
-	public function get_width(): Float
-	{
-		return display.width;
-	}
-	
-	public function get_height(): Float
-	{
-		return display.height;
-	}
+	}	
 	
 	public function get_halfWidth(): Float
 	{
-		return display.width / 2;
+		return width / 2;
 	}
 	
 	public function get_halfHeight(): Float
 	{
-		return display.height / 2;
+		return height / 2;
 	}
 	
 	public function get_top(): Float

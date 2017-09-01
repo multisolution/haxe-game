@@ -5,6 +5,7 @@ import motion.Actuate;
 import motion.easing.Linear;
 import nape.geom.Vec2;
 import nape.space.Space;
+import openfl.Assets;
 import openfl.display.Sprite;
 import openfl.display.StageScaleMode;
 import openfl.events.Event;
@@ -32,6 +33,8 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
+		
+		stage.addChild(Assets.getMovieClip("library:Background"));
 		
 		stage.scaleMode = StageScaleMode.EXACT_FIT;
 		

@@ -22,18 +22,19 @@ import openfl.events.TouchEvent;
 
 class Player extends Entity
 {	
-	public var speed: Float = 225;
+	public var speed: Float = 200;
 	public var isJumping: Bool = false;
 	public var isBoosted: Bool = false;
 	
-	private var _width: Float = 30;
-	private var _height: Float = 30;
-	private var jumpPower: Float = 200;
+	private var jumpPower: Float = 150;
 	
 	override function init() 
 	{		
+		width = 16;
+		height = 30;
+		
 		type = BodyType.DYNAMIC;
-		verts = [];
+		verts = Polygon.box(width, height);
 		
 		detectCollision(CbTypes.PLAYER, CbTypes.WALL, onWallCollision);
 		detectCollision(CbTypes.PLAYER, CbTypes.FLOOR, onFloorCollision);
@@ -52,7 +53,6 @@ class Player extends Entity
 		body.cbTypes.add(CbTypes.PLAYER);		
 		body.allowRotation = false;
 		
-		shape = new Circle(_width / 2);
 		shape.material.dynamicFriction = 0;
 		
 		move();
@@ -60,10 +60,7 @@ class Player extends Entity
 	
 	override function render(): DisplayObject 
 	{
-		var graphic: MovieClip = Assets.getMovieClip("library:Minazinha");
-		graphic.width = 30;
-		graphic.height = 30;
-		return graphic;
+		return Assets.getMovieClip("library:Minazinha");
 	}
 	
 	public function move()
@@ -129,18 +126,8 @@ class Player extends Entity
 			return true;
 		}
 		
-		var threshold: Int = 3;
-		
-		var isAbove: Bool = Math.floor(bottom) - threshold <= Math.ceil(enemy.top);		
-		trace('isAbove: $isAbove = ${Math.floor(bottom) - threshold} <= ${Math.ceil(enemy.top)}');
-		
-		var isOnTheLeft: Bool = Math.ceil(left) + threshold < Math.floor(enemy.right);
-		trace('isOnTheLeft: $isOnTheLeft = ${Math.ceil(left) + threshold} < ${Math.floor(enemy.right)}');
-		
-		var isOnTheRight: Bool = Math.floor(right) - threshold > Math.ceil(enemy.left);
-		trace('isOnTheRight: $isOnTheRight = ${Math.floor(right) - threshold} > ${Math.ceil(enemy.left)}');
-		
-		return isAbove && isOnTheLeft && isOnTheRight;
+		var tolerence: Int = 3;		
+		return Math.floor(bottom) - tolerence <= Math.ceil(enemy.top);
 	}
 	
 	private function onEnemyWallCollision(collision: InteractionCallback)

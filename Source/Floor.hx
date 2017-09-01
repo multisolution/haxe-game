@@ -3,20 +3,20 @@ package;
 import nape.phys.BodyType;
 import nape.shape.Polygon;
 import nape.space.Space;
+import openfl.Assets;
 import openfl.display.DisplayObject;
 import openfl.display.Sprite;
 import openfl.display.Stage;
 
 class Floor extends Entity 
-{
-	private var _width: Float = 0;
-	private var _height: Float = 20;
-	
+{	
 	override function init() 
 	{
-		_width = stage.stageWidth;		
+		width = stage.stageWidth;
+		height = 20;
+		
 		type = BodyType.KINEMATIC;
-		verts = Polygon.box(_width, _height);
+		verts = Polygon.box(width, height);
 	}
 	
 	override function create() 
@@ -24,15 +24,11 @@ class Floor extends Entity
 		super.create();
 		
 		body.cbTypes.add(CbTypes.FLOOR);
-	}
+	}                                                                                                                     
 	
 	override function render():DisplayObject 
 	{
-		var sprite: Sprite = new Sprite();
-		sprite.graphics.beginFill(0);
-		sprite.graphics.drawRect(-_width / 2, -_height / 2, _width, _height);
-		sprite.graphics.endFill();
-		return sprite;
+		return Assets.getMovieClip("library:FloorArt");
 	}
 	
 }
