@@ -10,7 +10,7 @@ import openfl.display.Stage;
 class Wall extends Entity 
 {
 	private var _width: Float = 20;
-	private var _height: Float = 40;
+	private var _height: Float = 60;
 	
 	override function init() 
 	{		

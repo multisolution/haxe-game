@@ -9,6 +9,11 @@ import openfl.display.Sprite;
 import openfl.display.StageScaleMode;
 import openfl.events.Event;
 
+#if flash
+import nape.util.BitmapDebug;
+import nape.util.Debug;
+#end
+
 class Main extends Sprite
 {
 	public var currentLevel(get, null): Level;
@@ -19,6 +24,10 @@ class Main extends Sprite
 	private var levels: Array<Level>;
 	private var currentLevelIndex: Int;
 	private var ui: UI;
+	
+	#if flash
+	private var debug: Debug;
+	#end
 	
 	public function new()
 	{
@@ -39,6 +48,11 @@ class Main extends Sprite
 		stage.addEventListener(PlayerEvent.LADDER_COLLISION, onPlayerLadderCollision, false, 0, true);
 		stage.addEventListener(PlayerEvent.ENEMY_COLLISION, onPlayerEnemyCollision, false, 0, true);
 		stage.addEventListener(Event.ENTER_FRAME, onEnterFrame, false, 0, true);
+		
+		#if flash
+		debug = new BitmapDebug(stage.stageWidth, stage.stageHeight, stage.color);
+        stage.addChild(debug.display);
+		#end
 	}
 	
 	private function start()
@@ -63,7 +77,7 @@ class Main extends Sprite
 	}
 	
 	private function onPlayerEnemyCollision(event: PlayerEvent)
-	{
+	{		
 		Data.setHighScore(Std.int(Math.max(Data.highScore(), Data.score())));
 		
 		reset();
@@ -86,7 +100,7 @@ class Main extends Sprite
 	{
 		var prevLevel: Level = currentLevel;
 		var newPlayerX: Float = currentLevel.ladder.x;
-		var toSlide: Float = currentLevelIndex > 2 ? 80 : 0;
+		var toSlide: Float = currentLevelIndex > 2 ? 100 : 0;
 		
 		player.shape.sensorEnabled = true;
 		player.body.velocity.setxy(0, 0);		
@@ -124,5 +138,11 @@ class Main extends Sprite
 	{
 		space.step(1 / stage.frameRate);
 		ui.update();
+		
+		#if flash
+		debug.clear();
+        debug.draw(space);
+        debug.flush();
+		#end
 	}
 }

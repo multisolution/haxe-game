@@ -31,7 +31,7 @@ class Level
 		
 		this.player = player;
 		
-		y = prevLevel == null ? stage.stageHeight - floor.halfHeight : prevLevel.y - 90;
+		y = prevLevel == null ? stage.stageHeight - floor.halfHeight : prevLevel.y - 100;
 		
 		floor.position(stage.stageWidth / 2, y);
 		leftWall.position(leftWall.halfWidth, floor.y - floor.halfHeight - leftWall.halfHeight);
@@ -45,7 +45,7 @@ class Level
 		);
 		
 		var ladderX: Float = getRandomXFor(ladder);
-		ladder.position(ladderX, floor.y - floor.halfHeight - ladder.halfHeight - 30);
+		ladder.position(ladderX, floor.y - floor.halfHeight - ladder.halfHeight - 40);
 		
 		
 		var enemyX: Float = getRandomXFor(enemy);

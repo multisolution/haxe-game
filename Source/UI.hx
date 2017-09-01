@@ -32,9 +32,9 @@ class UI extends Sprite
 	
 	public function update()
 	{
-		score.text = Data.score();
+		score.text = Std.string(Data.score());
 		
-		highScore.text = Data.highScore();
+		highScore.text = Std.string(Data.highScore());
 		highScore.x = stage.stageWidth - highScore.textWidth - 20;
 	}
 }

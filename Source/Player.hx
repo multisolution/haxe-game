@@ -11,6 +11,7 @@ import nape.callbacks.InteractionType;
 import nape.callbacks.OptionType;
 import nape.geom.Vec2;
 import nape.phys.BodyType;
+import nape.shape.Circle;
 import nape.shape.Polygon;
 import openfl.Assets;
 import openfl.display.DisplayObject;
@@ -32,7 +33,7 @@ class Player extends Entity
 	override function init() 
 	{		
 		type = BodyType.DYNAMIC;
-		verts = Polygon.box(_width, _height);
+		verts = [];
 		
 		detectCollision(CbTypes.PLAYER, CbTypes.WALL, onWallCollision);
 		detectCollision(CbTypes.PLAYER, CbTypes.FLOOR, onFloorCollision);
@@ -46,11 +47,12 @@ class Player extends Entity
 	
 	override function create() 
 	{
-		super.create();		
+		super.create();
 		
 		body.cbTypes.add(CbTypes.PLAYER);		
 		body.allowRotation = false;
 		
+		shape = new Circle(_width / 2);
 		shape.material.dynamicFriction = 0;
 		
 		move();
@@ -62,12 +64,6 @@ class Player extends Entity
 		graphic.width = 30;
 		graphic.height = 30;
 		return graphic;
-		
-		var sprite: Sprite = new Sprite();
-		sprite.graphics.beginFill(0x0000FF);
-		sprite.graphics.drawRect(-_width / 2, -_height / 2, _width, _height);
-		sprite.graphics.endFill();
-		return sprite;
 	}
 	
 	public function move()
@@ -118,10 +114,7 @@ class Player extends Entity
 	{
 		var enemy: Enemy = cast(collision.int2.userData.entity, Enemy);
 		
-		if (
-			(Std.int(bottom) <= Std.int(enemy.top)) ||
-			isBoosted
-		) {
+		if (shouldKill(enemy)) {
 			enemy.free();
 			move();
 			return;
@@ -130,11 +123,30 @@ class Player extends Entity
 		stage.dispatchEvent(new PlayerEvent(PlayerEvent.ENEMY_COLLISION));
 	}
 	
+	private function shouldKill(enemy: Enemy): Bool
+	{		
+		if (isBoosted) {
+			return true;
+		}
+		
+		var threshold: Int = 3;
+		
+		var isAbove: Bool = Math.floor(bottom) - threshold <= Math.ceil(enemy.top);		
+		trace('isAbove: $isAbove = ${Math.floor(bottom) - threshold} <= ${Math.ceil(enemy.top)}');
+		
+		var isOnTheLeft: Bool = Math.ceil(left) + threshold < Math.floor(enemy.right);
+		trace('isOnTheLeft: $isOnTheLeft = ${Math.ceil(left) + threshold} < ${Math.floor(enemy.right)}');
+		
+		var isOnTheRight: Bool = Math.floor(right) - threshold > Math.ceil(enemy.left);
+		trace('isOnTheRight: $isOnTheRight = ${Math.floor(right) - threshold} > ${Math.ceil(enemy.left)}');
+		
+		return isAbove && isOnTheLeft && isOnTheRight;
+	}
+	
 	private function onEnemyWallCollision(collision: InteractionCallback)
 	{
 		var enemy: Enemy = cast(collision.int1.userData.entity, Enemy);
-		enemy.speed *= -1;
-		enemy.move();
+		enemy.bounce();
 	}
 	
 	private function onBoostCollision(collision: InteractionCallback)
