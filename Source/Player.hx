@@ -87,6 +87,7 @@ class Player extends Entity
 	public function stopBoost()
 	{
 		isBoosted = false;
+		display.alpha = 1;
 	}
 	
 	
