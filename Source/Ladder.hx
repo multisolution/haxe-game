@@ -3,7 +3,6 @@ package;
 import nape.phys.BodyType;
 import nape.shape.Polygon;
 import openfl.display.DisplayObject;
-import openfl.display.Sprite;
 import openfl.Assets;
 
 class Ladder extends Entity
@@ -21,18 +20,14 @@ class Ladder extends Entity
 	{
 		super.create();
 
-		body.cbTypes.add(CbTypes.LADDER);
+		body.cbTypes.add(InteractionManager.ladderCallbackType);
+
+        shape.filter.collisionGroup = InteractionManager.ladderCollisionGroup;
+        shape.filter.collisionMask = InteractionManager.ladderCollisonMask;
 	}
 
-	override function render():DisplayObject
+	override function render(): DisplayObject
 	{
-        /*
-		var sprite: Sprite = new Sprite();
-		sprite.graphics.beginFill(0x777777);
-		sprite.graphics.drawRect(-halfWidth, -halfHeight, width, height);
-		sprite.graphics.endFill();
-		return sprite;
-        */
         return Assets.getMovieClip("library:LadderArt");
 	}
 }

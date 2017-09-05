@@ -1,24 +1,14 @@
 package;
 
 import events.PlayerEvent;
-import haxe.Timer;
 import motion.Actuate;
-import nape.callbacks.CbEvent;
-import nape.callbacks.CbType;
 import nape.callbacks.InteractionCallback;
-import nape.callbacks.InteractionListener;
-import nape.callbacks.InteractionType;
-import nape.callbacks.OptionType;
 import nape.geom.Vec2;
 import nape.phys.BodyType;
-import nape.shape.Circle;
 import nape.shape.Polygon;
 import openfl.Assets;
 import openfl.display.DisplayObject;
-import openfl.display.MovieClip;
-import openfl.display.Sprite;
 import openfl.events.MouseEvent;
-import openfl.events.TouchEvent;
 
 class Player extends Entity
 {
@@ -36,13 +26,6 @@ class Player extends Entity
 		type = BodyType.DYNAMIC;
 		verts = Polygon.box(width, height);
 
-		detectCollision(CbTypes.PLAYER, CbTypes.WALL, onWallCollision);
-		detectCollision(CbTypes.PLAYER, CbTypes.FLOOR, onFloorCollision);
-		detectCollision(CbTypes.PLAYER, CbTypes.LADDER, onLadderCollision);
-		detectCollision(CbTypes.PLAYER, CbTypes.ENEMY, onEnemyCollision);
-		detectCollision(CbTypes.ENEMY, CbTypes.WALL, onEnemyWallCollision);
-		detectCollision(CbTypes.PLAYER, CbTypes.BOOST, onBoostCollision);
-
 		stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown, false, 0, true);
 	}
 
@@ -50,8 +33,12 @@ class Player extends Entity
 	{
 		super.create();
 
-		body.cbTypes.add(CbTypes.PLAYER);
+		body.cbTypes.add(InteractionManager.playerCallbackType);
 		body.allowRotation = false;
+        body.userData.entity = this;
+
+        shape.filter.collisionGroup = InteractionManager.playerCollisionGroup;
+        shape.filter.collisionMask = InteractionManager.playerCollisionMask;
 		shape.material.dynamicFriction = 0;
 
 		move();
@@ -89,42 +76,14 @@ class Player extends Entity
 		display.alpha = 1;
 	}
 
-
-	private function onWallCollision(collision: InteractionCallback)
+	public function bounce()
 	{
 		speed *= -1;
 		display.scaleX *= -1;
 		move();
 	}
 
-	private function onFloorCollision(collision: InteractionCallback)
-	{
-		isJumping = false;
-	}
-
-	private function onLadderCollision(collision: InteractionCallback)
-	{
-		stage.dispatchEvent(new PlayerEvent(PlayerEvent.LADDER_COLLISION));
-	}
-
-	private function onEnemyCollision(collision: InteractionCallback)
-	{
-		var enemy: Enemy = cast(collision.int2.userData.entity, Enemy);
-
-        if(enemy.isDead){
-            return;
-        }
-
-		if (shouldKill(enemy)) {
-			enemy.kill();
-			move();
-			return;
-		}
-
-		stage.dispatchEvent(new PlayerEvent(PlayerEvent.ENEMY_COLLISION));
-	}
-
-	private function shouldKill(enemy: Enemy): Bool
+	public function willKill(enemy: Enemy): Bool
 	{
         if (isBoosted) {
 			return true;
@@ -134,19 +93,10 @@ class Player extends Entity
 		return Math.floor(bottom) - tolerence <= Math.ceil(enemy.top);
 	}
 
-	private function onEnemyWallCollision(collision: InteractionCallback)
-	{
-		var enemy: Enemy = cast(collision.int1.userData.entity, Enemy);
-		enemy.bounce();
-	}
-
-	private function onBoostCollision(collision: InteractionCallback)
-	{
-		var mBoost: Boost = cast(collision.int2.userData.entity, Boost);
-		mBoost.free();
-		boost();
-		move();
-	}
+    public function kill(enemy: Enemy)
+    {
+        enemy.die();
+    }
 
 	private function onMouseDown(event: MouseEvent)
 	{

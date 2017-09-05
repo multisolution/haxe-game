@@ -19,8 +19,10 @@ class Boost extends Entity
 	{
 		super.create();
 
-		body.cbTypes.add(CbTypes.BOOST);
+		body.cbTypes.add(InteractionManager.boostCallbackType);
 		body.userData.entity = this;
+
+        shape.sensorEnabled = true;
 	}
 
 	override function render():DisplayObject

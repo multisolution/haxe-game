@@ -19,8 +19,11 @@ class Wall extends Entity
 	override function create()
 	{
 		super.create();
-		body.cbTypes.add(CbTypes.WALL);
 
+		body.cbTypes.add(InteractionManager.wallCallbackType);
+
+        shape.filter.collisionGroup = InteractionManager.wallCollisionGroup;
+        shape.filter.collisionMask = InteractionManager.wallCollisionMask;
 	}
 
 	override function render():DisplayObject

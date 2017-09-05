@@ -20,7 +20,10 @@ class Floor extends Entity
 	{
 		super.create();
 
-		body.cbTypes.add(CbTypes.FLOOR);
+		body.cbTypes.add(InteractionManager.floorCallbackType);
+
+        shape.filter.collisionGroup = InteractionManager.floorCollisionGroup;
+        shape.filter.collisionMask = InteractionManager.floorCollisionMask;
 
 	}
 

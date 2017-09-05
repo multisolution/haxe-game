@@ -1,6 +1,7 @@
 package;
 
 import events.PlayerEvent;
+import events.GameEvent;
 import motion.Actuate;
 import motion.easing.Linear;
 import nape.geom.Vec2;
@@ -9,11 +10,6 @@ import openfl.Assets;
 import openfl.display.Sprite;
 import openfl.display.StageScaleMode;
 import openfl.events.Event;
-
-#if flash
-import nape.util.BitmapDebug;
-import nape.util.Debug;
-#end
 
 class Main extends Sprite
 {
@@ -25,17 +21,13 @@ class Main extends Sprite
 	private var levels: Array<Level>;
 	private var currentLevelIndex: Int;
 	private var ui: UI;
-
-	#if flash
-	private var debug: Debug;
-	#end
+    private var interactionManager: InteractionManager;
 
 	public function new()
 	{
 		super();
 
 		stage.addChild(Assets.getMovieClip("library:Background"));
-
 		stage.scaleMode = StageScaleMode.EXACT_FIT;
 
 		gravity = new Vec2(0, 1000);
@@ -43,19 +35,16 @@ class Main extends Sprite
 
 		player = new Player(stage, space);
 		ui = new UI();
+        stage.addChild(ui);
 
-		stage.addChild(ui);
+        interactionManager = InteractionManager.init(stage, space);
+        interactionManager.addEventListener(PlayerEvent.JUMP, onPlayerJump, false, 0, true);
+        interactionManager.addEventListener(GameEvent.LEVEL_UP, onLevelUp, false, 0, true);
+        interactionManager.addEventListener(GameEvent.GAME_OVER, onGameOver, false, 0, true);
 
-		start();
-
-		stage.addEventListener(PlayerEvent.LADDER_COLLISION, onPlayerLadderCollision, false, 0, true);
-		stage.addEventListener(PlayerEvent.ENEMY_COLLISION, onPlayerEnemyCollision, false, 0, true);
 		stage.addEventListener(Event.ENTER_FRAME, onEnterFrame, false, 0, true);
 
-		#if flash
-		debug = new BitmapDebug(stage.stageWidth, stage.stageHeight, stage.color);
-        stage.addChild(debug.display);
-		#end
+        start();
 	}
 
 	private function start()
@@ -79,10 +68,9 @@ class Main extends Sprite
 		Data.resetScore();
 	}
 
-	private function onPlayerEnemyCollision(event: PlayerEvent)
+	private function onGameOver(event: GameEvent)
 	{
 		Data.setHighScore(Std.int(Math.max(Data.highScore(), Data.score())));
-
 		reset();
 		start();
 	}
@@ -99,9 +87,8 @@ class Main extends Sprite
 		return levels[currentLevelIndex];
 	}
 
-	private function onPlayerLadderCollision(event: PlayerEvent)
+	private function onLevelUp(event: GameEvent)
 	{
-		var prevLevel: Level = currentLevel;
 		var newPlayerX: Float = currentLevel.ladder.x;
 		var toSlide: Float = currentLevelIndex > 2 ? 100 : 0;
 
@@ -137,15 +124,14 @@ class Main extends Sprite
 		}
 	}
 
+    private function onPlayerJump(event: PlayerEvent)
+    {
+        player.jump();
+    }
+
 	private function onEnterFrame(event: Event)
 	{
 		space.step(1 / stage.frameRate);
 		ui.update();
-
-		#if flash
-		debug.clear();
-        debug.draw(space);
-        debug.flush();
-		#end
 	}
 }

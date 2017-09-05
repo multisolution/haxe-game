@@ -30,7 +30,6 @@ class Level
 		enemy = new Enemy(stage, space);
         arrow = new Arrow(stage, space);
 
-
 		this.player = player;
 
 		y = prevLevel == null ? stage.stageHeight - floor.halfHeight : prevLevel.y - 100;
@@ -40,7 +39,6 @@ class Level
 		rightWall.position(stage.stageWidth - rightWall.halfWidth, floor.top - rightWall.halfHeight);
 
         arrow.position(leftWall.x , leftWall.y);
-
 
 		whiteSpace = new Rectangle(
 			leftWall.right,
@@ -65,14 +63,12 @@ class Level
 		}
 
 		enemy.position(enemyX, floor.top - enemy.halfHeight);
-
-        //stop enemy animation
         cast(enemy.display, MovieClip).stop();
 
 		boost = new Boost(stage, space);
 		boost.position(
 			Math.random() > 0.5 ? leftWall.right + 20 : rightWall.left - 20,
-			floor.top - boost.halfHeight
+			player.y
 		);
 
 		if (Math.random() >= 0.1) {

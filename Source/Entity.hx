@@ -59,18 +59,6 @@ class Entity
 		body.position.y = y;
 	}
 
-	public function detectCollision(a: Dynamic, b: Dynamic, handler: InteractionCallback->Void): InteractionListener
-	{
-		var event: CbEvent = CbEvent.BEGIN;
-		var type: InteractionType = InteractionType.COLLISION;
-		var listener: InteractionListener = new InteractionListener(event, type, a, b, handler);
-
-		space.listeners.add(listener);
-		listeners.push(listener);
-
-		return listener;
-	}
-
 	public function get_x(): Float
 	{
 		return body.position.x;
