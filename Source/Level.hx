@@ -6,6 +6,7 @@ import motion.easing.Expo;
 import nape.space.Space;
 import openfl.display.Stage;
 import openfl.geom.Rectangle;
+import openfl.display.MovieClip;
 
 class Level
 {
@@ -18,6 +19,7 @@ class Level
 	public var whiteSpace: Rectangle;
 	public var player: Player;
 	public var boost: Boost;
+    public var arrow:Arrow;
 
 	public function new(stage: Stage, space: Space, ?prevLevel: Level, player: Player)
 	{
@@ -26,6 +28,8 @@ class Level
 		rightWall = new Wall(stage, space);
 		ladder = new Ladder(stage, space);
 		enemy = new Enemy(stage, space);
+        arrow = new Arrow(stage, space);
+
 
 		this.player = player;
 
@@ -34,6 +38,9 @@ class Level
 		floor.position(stage.stageWidth / 2, y);
 		leftWall.position(leftWall.halfWidth, floor.top - leftWall.halfHeight);
 		rightWall.position(stage.stageWidth - rightWall.halfWidth, floor.top - rightWall.halfHeight);
+
+        arrow.position(leftWall.x , leftWall.y);
+
 
 		whiteSpace = new Rectangle(
 			leftWall.right,
@@ -54,9 +61,13 @@ class Level
 			}
 		} else {
 			enemy.free();
+            arrow.free();
 		}
 
 		enemy.position(enemyX, floor.top - enemy.halfHeight);
+
+        //stop enemy animation
+        cast(enemy.display, MovieClip).stop();
 
 		boost = new Boost(stage, space);
 		boost.position(
@@ -87,6 +98,7 @@ class Level
 		Actuate.tween(boost, duration, {y: boost.y + toSlide}).ease(Expo.easeInOut);
 		Actuate.tween(ladder, duration, {y: ladder.y + toSlide}).delay(0.1);
 		Actuate.tween(enemy, duration, {y: enemy.y + toSlide}).delay(0.1).ease(Bounce.easeOut);
+        Actuate.tween(arrow, duration, {y: arrow.y + toSlide});
 	}
 
 	public function free()
@@ -97,6 +109,7 @@ class Level
 		ladder.free();
 		enemy.free();
 		boost.free();
+        arrow.free();
 	}
 
 }

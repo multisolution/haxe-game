@@ -21,6 +21,7 @@ class Floor extends Entity
 		super.create();
 
 		body.cbTypes.add(CbTypes.FLOOR);
+
 	}
 
 	override function render():DisplayObject

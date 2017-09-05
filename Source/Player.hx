@@ -40,7 +40,7 @@ class Player extends Entity
 		detectCollision(CbTypes.PLAYER, CbTypes.FLOOR, onFloorCollision);
 		detectCollision(CbTypes.PLAYER, CbTypes.LADDER, onLadderCollision);
 		detectCollision(CbTypes.PLAYER, CbTypes.ENEMY, onEnemyCollision);
-		detectCollision(CbTypes.ENEMY, new OptionType(CbType.ANY_BODY, CbTypes.FLOOR), onEnemyWallCollision);
+		detectCollision(CbTypes.ENEMY, CbTypes.WALL, onEnemyWallCollision);
 		detectCollision(CbTypes.PLAYER, CbTypes.BOOST, onBoostCollision);
 
 		stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown, false, 0, true);
@@ -52,7 +52,6 @@ class Player extends Entity
 
 		body.cbTypes.add(CbTypes.PLAYER);
 		body.allowRotation = false;
-
 		shape.material.dynamicFriction = 0;
 
 		move();
@@ -112,8 +111,12 @@ class Player extends Entity
 	{
 		var enemy: Enemy = cast(collision.int2.userData.entity, Enemy);
 
+        if(enemy.isDead){
+            return;
+        }
+
 		if (shouldKill(enemy)) {
-			enemy.free();
+			enemy.kill();
 			move();
 			return;
 		}
@@ -123,7 +126,7 @@ class Player extends Entity
 
 	private function shouldKill(enemy: Enemy): Bool
 	{
-		if (isBoosted) {
+        if (isBoosted) {
 			return true;
 		}
 

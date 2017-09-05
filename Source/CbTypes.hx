@@ -10,4 +10,5 @@ class CbTypes
 	static public var LADDER: CbType = new CbType();
 	static public var ENEMY: CbType = new CbType();
 	static public var BOOST: CbType = new CbType();
+    static public var ARROW: CbType = new CbType();
 }

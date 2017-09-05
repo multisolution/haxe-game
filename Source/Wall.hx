@@ -20,6 +20,7 @@ class Wall extends Entity
 	{
 		super.create();
 		body.cbTypes.add(CbTypes.WALL);
+
 	}
 
 	override function render():DisplayObject
