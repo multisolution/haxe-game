@@ -4,6 +4,7 @@ import nape.phys.BodyType;
 import nape.shape.Polygon;
 import openfl.display.DisplayObject;
 import openfl.display.Sprite;
+import openfl.Assets;
 
 class Ladder extends Entity
 {
@@ -25,10 +26,13 @@ class Ladder extends Entity
 
 	override function render():DisplayObject
 	{
+        /*
 		var sprite: Sprite = new Sprite();
 		sprite.graphics.beginFill(0x777777);
 		sprite.graphics.drawRect(-halfWidth, -halfHeight, width, height);
 		sprite.graphics.endFill();
 		return sprite;
+        */
+        return Assets.getMovieClip("library:LadderArt");
 	}
 }
