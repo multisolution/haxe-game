@@ -52,8 +52,13 @@ class Main extends Sprite
 		currentLevelIndex = 0;
 		levels = [];
 
-		addLevel();
-		addLevel();
+
+        for(i in 0...9){
+            addLevel();
+        }
+
+
+
 
 		player.position(stage.stageWidth / 2, currentLevel.floor.top - player.halfHeight);
 		player.move();

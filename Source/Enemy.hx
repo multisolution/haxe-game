@@ -13,12 +13,12 @@ class Enemy extends Entity
 	public function move()
 	{
         body.velocity.x = speed;
-		cast(display, MovieClip).play();
+		cast(display, MovieClip).gotoAndStop(2);
 	}
 
     public function die()
     {
-        cast(display,MovieClip).gotoAndStop("tombstone");
+        cast(display, MovieClip).gotoAndStop(3);
         body.velocity.x = speed = 0;
         shape.filter.collisionMask = InteractionManager.enemyDeadCollisionMask;
     }
@@ -52,6 +52,7 @@ class Enemy extends Entity
         shape.filter.collisionGroup = InteractionManager.enemyCollisionGroup;
         shape.filter.collisionMask = InteractionManager.enemyCollisionMask;
 		shape.material.dynamicFriction = 0;
+        cast(display, MovieClip).gotoAndStop(1);
 	}
 
 	override function render():DisplayObject

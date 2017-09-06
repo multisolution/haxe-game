@@ -14,7 +14,7 @@ class Player extends Entity
 {
 	public var speed: Float = 200;
 	public var isJumping: Bool = false;
-	public var isBoosted: Bool = false;
+	public var isBoosted: Bool = true;
 
 	private var jumpPower: Float = 150;
 
@@ -96,6 +96,7 @@ class Player extends Entity
     public function kill(enemy: Enemy)
     {
         enemy.die();
+        move();
     }
 
 	private function onMouseDown(event: MouseEvent)
